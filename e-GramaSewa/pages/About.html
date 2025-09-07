@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - e-GramaSewa</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+      
+       /* ================== Services Section ================== */
+        .services {
+            padding: 80px 0;
+            background: var(--background);
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .service-card .icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: rgba(37, 99, 235, 0.1);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .service-card ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .service-card li {
+            color: var(--text-light);
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .service-card li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .service-card strong {
+            color: var(--text);
+        }
+
+        .learn-more {
+            display: inline-block;
+            margin-top: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            position: relative;
+            align-self: flex-start;
+        }
+
+        .learn-more::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .learn-more:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .btn.primary {
+            background: var(--primary);
+            color: #2e25a8;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Language Toggle Button */
+        .lang-toggle-btn {
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 8px 12px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lang-toggle-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .lang-toggle-btn i {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="../images/Logo_3.png" alt="e-GramaSewa Logo">
+  </div>
+
+  <!-- Middle Navigation Links -->
+  <nav class="middle-nav">
+    <ul>
+      <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+      <li><a href="About.html" data-translate="nav.about">About</a></li>
+      <li><a href="service.html" data-translate="nav.services">Services</a></li>
+      <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Side Buttons -->
+  <div class="right-nav">
+    <a href="login.html" class="login-btn" data-translate="nav.login">Login</a>
+    <a href="../php/register.php" class="register-btn" data-translate="nav.register">Register</a>
+    <select id="language-select" onchange="changeLanguage()">
+      <option value="english.html">English</option>
+      <option value="sinhala.html">සිංහල</option>
+    </select>
+    <button id="language-toggle" onclick="toggleLanguage()" class="lang-toggle-btn" title="Toggle Language">
+      <i class="fas fa-language"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Mission and Vision Section -->
+<section class="mission-vision">
+  <div class="container">
+    <h2 class="section-title" data-translate="about.mission.title">Our Mission & Vision</h2>
+    <div class="mission-vision-content">
+      <div class="mission">
+        <h3 data-translate="about.mission.heading">Mission</h3>
+        <p data-translate="about.mission.text">Our mission is to provide seamless, efficient, and transparent access to essential government services through a user-friendly digital platform. We aim to simplify and streamline the process for citizens to access government certificates, with a focus on accessibility, security, and reliability.</p>
+      </div>
+      <div class="vision">
+        <h3 data-translate="about.vision.heading">Vision</h3>
+        <p data-translate="about.vision.text">Our vision is to create a digitally empowered Sri Lanka, where every citizen can easily access government services from anywhere, at any time. We strive to build a more inclusive, transparent, and responsive public service system that meets the needs of modern society.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services">
+  <div class="container">
+    <h2 class="section-title" data-translate="about.services.title">Available Services</h2>
+    <p class="section-subtitle" data-translate="about.services.subtitle">Select the service you need and follow the simple steps to apply.</p>
+    
+    
+
+      <!-- Income Certificate Service -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+        <h3 data-translate="about.income.title">Income Certificate</h3>
+        <p data-translate="about.income.desc">Apply for your income certificate online with our simplified process.</p>
+        <ul>
+          <li><strong data-translate="about.income.eligibility">Eligibility:</strong> <span data-translate="about.income.eligibility.text">Employed individuals and businesses</span></li>
+          <li><strong data-translate="about.income.documents">Required Documents:</strong> <span data-translate="about.income.documents.text">Pay slip, Tax returns (if applicable)</span></li>
+          <li><strong data-translate="about.income.time">Processing Time:</strong> <span data-translate="about.income.time.text">5-7 working days</span></li>
+        </ul>
+        <a href="income-certificate-form.html" class="learn-more" data-translate="about.learnMore">Learn More →</a>
+      </div>
+
+      <!-- Character Certificate Service -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+        <h3 data-translate="about.character.title">Character Certificate</h3>
+        <p data-translate="about.character.desc">Apply for your Character certificate online with our simplified process.</p>
+        <ul>
+          <li><strong data-translate="about.character.eligibility">Eligibility:</strong> <span data-translate="about.character.eligibility.text">Individuals seeking government-related positions</span></li>
+          <li><strong data-translate="about.character.documents">Required Documents:</strong> <span data-translate="about.character.documents.text">National ID, Police clearance (if applicable)</span></li>
+          <li><strong data-translate="about.character.time">Processing Time:</strong> <span data-translate="about.character.time.text">7-10 working days</span></li>
+        </ul>
+        <a href="character-certificate-form.html" class="learn-more" data-translate="about.learnMore">Learn More →</a>
+      </div>
+
+      <!-- Grama Niladari Certificate Service -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+        <h3 data-translate="about.grama.title">Grama Niladari Certificate</h3>
+        <p data-translate="about.grama.desc">Apply for your Grama Niladari certificate online with our simplified process.</p>
+        <ul>
+          <li><strong data-translate="about.grama.eligibility">Eligibility:</strong> <span data-translate="about.grama.eligibility.text">Residents of a specific Grama Niladari division</span></li>
+          <li><strong data-translate="about.grama.documents">Required Documents:</strong> <span data-translate="about.grama.documents.text">Proof of address (e.g., utility bill, rental agreement)</span></li>
+          <li><strong data-translate="about.grama.time">Processing Time:</strong> <span data-translate="about.grama.time.text">5-7 working days</span></li>
+        </ul>
+        <a href="grama-niladari-certificate-form.html" class="learn-more" data-translate="about.learnMore">Learn More →</a>
+      </div>
+    </div>
+
+    <div class="center">
+      <a href="Service.html" class="btn primary" data-translate="about.viewAll">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section footer-info">
+      <h4>E-Gramasevaka</h4>
+      <p data-translate="footer.description">Digital government services platform providing efficient and transparent access to various government services and certificates.</p>
+      <div class="social-icons">
+        <a href="https://www.whatsapp.com" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+    <div class="footer-section footer-links">
+      <h4 data-translate="footer.quickLinks">Quick Links</h4>
+      <ul>
+        <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+        <li><a href="About.html" data-translate="nav.services">Services</a></li>
+        <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+        <li><a href="register.html" data-translate="nav.register">Register</a></li>
+      </ul>
+    </div>
+    <div class="footer-section footer-contact">
+      <h4 data-translate="footer.contactInfo">Contact Info</h4>
+      <p><strong data-translate="footer.email">Email:</strong> support@egramasewa.lk</p>
+      <p><strong data-translate="footer.hotline">Hotline:</strong> 1919</p>
+      <p><strong data-translate="footer.address">Address:</strong> Government Office, Colombo, Sri Lanka</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-translate="footer.copyright">&copy; 2025 e-GramaSewa. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- JS File -->
+<script src="../js/script.js"></script>
+</body>
+</html>

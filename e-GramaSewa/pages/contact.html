@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - e-GramaSewa</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ================== Contact Page Specific Styles ================== */
+    .contact-hero {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(16, 185, 129, 0.9)), url('../images/e.jpg') center/cover no-repeat;
+      color: white;
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      animation: shimmer 4s infinite;
+    }
+
+    .contact-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out;
+    }
+
+    .contact-hero p {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      opacity: 0.95;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out 0.3s both;
+    }
+
+    /* ================== Contact Section ================== */
+    .contact-section {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ================== Contact Info ================== */
+    .contact-info {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-info h2 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(37, 99, 235, 0.05);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--primary);
+    }
+
+    .contact-item:hover {
+      transform: translateX(10px);
+      background: rgba(37, 99, 235, 0.1);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+    }
+
+    .contact-item .icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .contact-item .content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .contact-item .content p {
+      color: var(--text-light);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    /* ================== Contact Form ================== */
+    .contact-form {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-form h2 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    /* ================== Map Section ================== */
+    .map-section {
+      padding: 80px 5%;
+      background: var(--card);
+      text-align: center;
+    }
+
+    .map-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .map-container h2 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      border: 2px dashed #cbd5e1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+
+    .map-placeholder i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    /* ================== FAQ Section ================== */
+    .faq-section {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-container h2 {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 20px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .faq-question {
+      padding: 25px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+    }
+
+    .faq-question i {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 30px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 25px 30px;
+      max-height: 200px;
+    }
+
+    .faq-answer p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ================== Responsive Design ================== */
+    @media (max-width: 768px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .contact-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .contact-info,
+      .contact-form {
+        padding: 30px 25px;
+      }
+
+      .contact-item {
+        padding: 15px;
+      }
+
+      .contact-item .icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+
+      .map-placeholder {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-hero {
+        padding: 80px 20px 60px;
+      }
+
+      .contact-hero h1 {
+        font-size: 2rem;
+      }
+
+      .contact-hero p {
+        font-size: 1.1rem;
+      }
+
+      .contact-section {
+        padding: 60px 5%;
+      }
+
+      .contact-info,
+      .contact-form {
+        padding: 25px 20px;
+      }
+    }
+
+    /* Language Toggle Button */
+    .lang-toggle-btn {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 8px 12px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lang-toggle-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .lang-toggle-btn i {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+
+<header>
+  <div class="logo">
+    <img src="../images/Logo_3.png" alt="e-GramaSewa Logo">
+  </div>
+
+  <!-- Middle Navigation Links -->
+  <nav class="middle-nav">
+    <ul>
+      <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+      <li><a href="About.html" data-translate="nav.about">About</a></li>
+      <li><a href="Service.html" data-translate="nav.services">Services</a></li>
+      <li><a href="contact.html" class="active" data-translate="nav.contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Side Buttons -->
+  <div class="right-nav">
+    <a href="../php/login.php" class="login-btn" data-translate="nav.login">Login</a>
+    <a href="../php/register.php" class="register-btn" data-translate="nav.register">Register</a>
+    <select id="language-select" onchange="changeLanguage()">
+      <option value="english.html">English</option>
+      <option value="sinhala.html">සිංහල</option>
+    </select>
+    <button id="language-toggle" onclick="toggleLanguage()" class="lang-toggle-btn" title="Toggle Language">
+      <i class="fas fa-language"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Contact Hero Section -->
+<section class="contact-hero">
+  <div class="container">
+    <h1 data-translate="contact.title">Contact Us</h1>
+    <p data-translate="contact.subtitle">Get in touch with us for any inquiries, support, or feedback. We're here to help you with all your government service needs.</p>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="contact-container">
+    <!-- Contact Information -->
+    <div class="contact-info">
+      <h2 data-translate="contact.getInTouch">Get In Touch</h2>
+      
+      <div class="contact-item">
+        <div class="icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="content">
+          <h3 data-translate="contact.office">Office Address</h3>
+          <p data-translate="contact.office.text">Government Office Complex<br>Colombo 07, Sri Lanka</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <div class="content">
+          <h3 data-translate="contact.phone">Phone Number</h3>
+          <p data-translate="contact.phone.text">+94 11 234 5678<br>+94 11 234 5679</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="content">
+          <h3 data-translate="contact.email">Email Address</h3>
+          <p data-translate="contact.email.text">support@egramasewa.lk<br>info@egramasewa.lk</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="content">
+          <h3 data-translate="contact.hours">Working Hours</h3>
+          <p data-translate="contact.hours.text">Monday - Friday: 8:00 AM - 5:00 PM<br>Saturday: 8:00 AM - 1:00 PM</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="icon">
+          <i class="fas fa-headset"></i>
+        </div>
+        <div class="content">
+          <h3 data-translate="contact.hotline">24/7 Hotline</h3>
+          <p data-translate="contact.hotline.text">1919 - Emergency Services<br>1920 - General Inquiries</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <h2 data-translate="contact.sendMessage">Send us a Message</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name" data-translate="contact.fullName">Full Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email" data-translate="contact.emailAddress">Email Address *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone" data-translate="contact.phoneNumber">Phone Number</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+
+        <div class="form-group">
+          <label for="subject" data-translate="contact.subject">Subject *</label>
+          <select id="subject" name="subject" required>
+            <option value="" data-translate="contact.selectSubject">Select a subject</option>
+            <option value="general" data-translate="contact.general">General Inquiry</option>
+            <option value="support" data-translate="contact.support">Technical Support</option>
+            <option value="complaint" data-translate="contact.complaint">Complaint</option>
+            <option value="suggestion" data-translate="contact.suggestion">Suggestion</option>
+            <option value="feedback" data-translate="contact.feedback">Feedback</option>
+            <option value="other" data-translate="contact.other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message" data-translate="contact.message">Message *</label>
+          <textarea id="message" name="message" placeholder="Please describe your inquiry in detail..." data-translate-placeholder="contact.messagePlaceholder" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i> <span data-translate="contact.send">Send Message</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section">
+  <div class="map-container">
+    <h2 data-translate="contact.findUs">Find Us</h2>
+    <div class="map-placeholder">
+      <div>
+        <i class="fas fa-map-marked-alt"></i>
+        <p data-translate="contact.mapComing">Interactive Map Coming Soon</p>
+        <small data-translate="contact.mapAddress">Government Office Complex, Colombo 07</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="faq-container">
+    <h2 data-translate="contact.faq">Frequently Asked Questions</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="contact.faq1.question">How can I track my application status?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="contact.faq1.answer">You can track your application status by logging into your account and visiting the "Track Application" section. You'll receive real-time updates on your application progress.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="contact.faq2.question">What documents do I need for certificate applications?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="contact.faq2.answer">Required documents vary by certificate type. Generally, you'll need your National ID, proof of residence, and relevant supporting documents. Check the specific requirements for each service.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="contact.faq3.question">How long does it take to process applications?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="contact.faq3.answer">Processing times vary by service type. Birth certificates typically take 3-5 business days, while other certificates may take 5-10 business days. You'll receive notifications at each stage.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="contact.faq4.question">Can I apply for multiple certificates at once?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="contact.faq4.answer">Yes, you can apply for multiple certificates simultaneously. Each application will be processed independently, and you can track them separately in your dashboard.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="contact.faq5.question">What if I need help with the application process?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="contact.faq5.answer">Our support team is available 24/7 via the hotline (1919) and email. You can also visit our office during working hours for in-person assistance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section footer-info">
+      <h4>E-Gramasevaka</h4>
+      <p data-translate="footer.description">Digital government services platform providing efficient and transparent access to various government services and certificates.</p>
+      <div class="social-icons">
+        <a href="https://www.whatsapp.com" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+    <div class="footer-section footer-links">
+      <h4 data-translate="footer.quickLinks">Quick Links</h4>
+      <ul>
+        <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+        <li><a href="About.html" data-translate="nav.about">About</a></li>
+        <li><a href="Service.html" data-translate="nav.services">Services</a></li>
+        <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-section footer-contact">
+      <h4 data-translate="footer.contactInfo">Contact Info</h4>
+      <p><strong data-translate="footer.email">Email:</strong> support@egramasewa.lk</p>
+      <p><strong data-translate="footer.hotline">Hotline:</strong> 1919</p>
+      <p><strong data-translate="footer.address">Address:</strong> Government Office, Colombo, Sri Lanka</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-translate="footer.copyright">&copy; 2025 e-GramaSewa. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- JS File -->
+<script src="../js/script.js"></script>
+<script>
+  // FAQ Toggle Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Close other FAQ items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+
+    // Contact Form Submission
+    const contactForm = document.getElementById('contactForm');
+    
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(contactForm);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const subject = formData.get('subject');
+      const message = formData.get('message');
+      
+      // Simple validation
+      if (!name || !email || !subject || !message) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      // Simulate form submission
+      const submitBtn = contactForm.querySelector('.submit-btn');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        alert('Thank you for your message! We will get back to you within 24 hours.');
+        contactForm.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }, 2000);
+    });
+  });
+</script>
+</body>
+</html>

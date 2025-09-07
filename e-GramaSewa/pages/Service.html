@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - e-GramaSewa</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Language Toggle Button */
+        .lang-toggle-btn {
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 8px 12px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lang-toggle-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .lang-toggle-btn i {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="../images/Logo_3.png" alt="e-GramaSewa Logo">
+  </div>
+
+  <!-- Middle Navigation Links -->
+  <nav class="middle-nav">
+    <ul>
+      <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+      <li><a href="About.html" data-translate="nav.about">About</a></li>
+      <li><a href="service.html" data-translate="nav.services">Services</a></li>
+      <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Side Buttons -->
+  <div class="right-nav">
+    <a href="Login.html" class="login-btn" data-translate="nav.login">Login</a>
+    <a href="register.html" class="register-btn" data-translate="nav.register">Register</a>
+    <select id="language-select" onchange="changeLanguage()">
+      <option value="english.html">English</option>
+      <option value="sinhala.html">සිංහල</option>
+    </select>
+    <button id="language-toggle" onclick="toggleLanguage()" class="lang-toggle-btn" title="Toggle Language">
+      <i class="fas fa-language"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Services Section -->
+<section class="services">
+  <div class="container">
+    <h2 class="section-title" data-translate="service.title">Available Services</h2>
+    <p class="section-subtitle" data-translate="service.subtitle">Select the service you need and follow the simple steps to apply.</p>
+    
+  
+
+      <!-- Income Certificate Service -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+        <h3 data-translate="service.income.title">Income Certificate</h3>
+        <p data-translate="service.income.desc">Apply for your income certificate online with our simplified process.</p>
+        <ul>
+          <li><strong data-translate="service.income.eligibility">Eligibility:</strong> <span data-translate="service.income.eligibility.text">Employed individuals and businesses</span></li>
+          <li><strong data-translate="service.income.documents">Required Documents:</strong> <span data-translate="service.income.documents.text">Pay slip, Tax returns (if applicable)</span></li>
+          <li><strong data-translate="service.income.howto">How to Apply:</strong> <span data-translate="service.income.howto.text">Fill out the online application and attach required documents</span></li>
+          <li><strong data-translate="service.income.timeline">Timeline:</strong> <span data-translate="service.income.timeline.text">5-7 working days</span></li>
+        </ul>
+        <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+      </div>
+
+      <!-- Character Certificate Service -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+        <h3 data-translate="service.character.title">Character Certificate</h3>
+        <p data-translate="service.character.desc">Apply for your Character certificate online with our simplified process.</p>
+        <ul>
+          <li><strong data-translate="service.character.eligibility">Eligibility:</strong> <span data-translate="service.character.eligibility.text">Individuals seeking government-related positions</span></li>
+          <li><strong data-translate="service.character.documents">Required Documents:</strong> <span data-translate="service.character.documents.text">National ID, Police clearance (if applicable)</span></li>
+          <li><strong data-translate="service.character.howto">How to Apply:</strong> <span data-translate="service.character.howto.text">Complete the form and submit the necessary police clearance</span></li>
+          <li><strong data-translate="service.character.timeline">Timeline:</strong> <span data-translate="service.character.timeline.text">7-10 working days</span></li>
+        </ul>
+        <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+      </div>
+
+      <!-- Resident Certificate Service -->
+<div class="service-card">
+  <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+  <h3 data-translate="service.resident.title">Resident Certificate</h3>
+  <p data-translate="service.resident.desc">Apply for your Resident Certificate online with our simplified process.</p>
+  <ul>
+    <li><strong data-translate="service.resident.eligibility">Eligibility:</strong> <span data-translate="service.resident.eligibility.text">Residents of a specific Grama Niladari division</span></li>
+    <li><strong data-translate="service.resident.documents">Required Documents:</strong> <span data-translate="service.resident.documents.text">Proof of address (e.g., utility bill, rental agreement)</span></li>
+    <li><strong data-translate="service.resident.howto">How to Apply:</strong> <span data-translate="service.resident.howto.text">Fill out the online form with proof of residence</span></li>
+    <li><strong data-translate="service.resident.timeline">Timeline:</strong> <span data-translate="service.resident.timeline.text">5-7 working days</span></li>
+  </ul>
+  <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+</div>
+
+      <!-- National Certificate Service -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-certificate"></i></div>
+        <h3 data-translate="service.national.title">National Certificate Recommendation </h3>
+        <p data-translate="service.national.desc">Apply for a National Certificate for various purposes like educational or employment verification.</p>
+        <ul>
+          <li><strong data-translate="service.national.eligibility">Eligibility:</strong> <span data-translate="service.national.eligibility.text">Citizens with proof of identity</span></li>
+          <li><strong data-translate="service.national.documents">Required Documents:</strong> <span data-translate="service.national.documents.text">National ID, Proof of Education or Employment</span></li>
+          <li><strong data-translate="service.national.howto">How to Apply:</strong> <span data-translate="service.national.howto.text">Submit your details and upload the necessary documents online</span></li>
+          <li><strong data-translate="service.national.timeline">Timeline:</strong> <span data-translate="service.national.timeline.text">5-7 working days</span></li>
+        </ul>
+        <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+      </div>
+
+
+      <!-- Family Composition Certificate -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-users"></i></div>
+        <h3 data-translate="service.family.title">Family Composition Certificate</h3>
+        <p data-translate="service.family.desc">Get a certificate stating the details of your family members.</p>
+        <ul>
+          <li><strong data-translate="service.family.eligibility">Eligibility:</strong> <span data-translate="service.family.eligibility.text">Sri Lankan citizens who need proof of family composition</span></li>
+          <li><strong data-translate="service.family.documents">Required Documents:</strong> <span data-translate="service.family.documents.text">National ID, Family details</span></li>
+          <li><strong data-translate="service.family.howto">How to Apply:</strong> <span data-translate="service.family.howto.text">Complete the online form and provide your family details</span></li>
+          <li><strong data-translate="service.family.timeline">Timeline:</strong> <span data-translate="service.family.timeline.text">5-7 working days</span></li>
+        </ul>
+        <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+      </div>
+
+      <!-- Living Certificate -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-heart"></i></div>
+        <h3 data-translate="service.living.title">Living Certificate</h3>
+        <p data-translate="service.living.desc">Apply for a certificate verifying your living status for various legal purposes.</p>
+        <ul>
+          <li><strong data-translate="service.living.eligibility">Eligibility:</strong> <span data-translate="service.living.eligibility.text">Sri Lankan citizens</span></li>
+          <li><strong data-translate="service.living.documents">Required Documents:</strong> <span data-translate="service.living.documents.text">National ID, Proof of residence</span></li>
+          <li><strong data-translate="service.living.howto">How to Apply:</strong> <span data-translate="service.living.howto.text">Complete the form and submit necessary documents</span></li>
+          <li><strong data-translate="service.living.timeline">Timeline:</strong> <span data-translate="service.living.timeline.text">3-5 working days</span></li>
+        </ul>
+        <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+      </div>
+
+      <!-- Confirmation for Land Use -->
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-map-marked-alt"></i></div>
+        <h3 data-translate="service.land.title">Confirmation for Land Use</h3>
+        <p data-translate="service.land.desc">Apply for confirmation of land use for agricultural, residential, or commercial purposes.</p>
+        <ul>
+          <li><strong data-translate="service.land.eligibility">Eligibility:</strong> <span data-translate="service.land.eligibility.text">Landowners or developers</span></li>
+          <li><strong data-translate="service.land.documents">Required Documents:</strong> <span data-translate="service.land.documents.text">Land title, Purpose of land use</span></li>
+          <li><strong data-translate="service.land.howto">How to Apply:</strong> <span data-translate="service.land.howto.text">Submit the form online and attach necessary documentation</span></li>
+          <li><strong data-translate="service.land.timeline">Timeline:</strong> <span data-translate="service.land.timeline.text">7-10 working days</span></li>
+        </ul>
+        <a href="../php/login.php" class="btn primary" data-translate="service.applyNow">Apply Now</a>
+      </div>
+    </div>
+
+   
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section footer-info">
+      <h4>E-Gramasevaka</h4>
+      <p data-translate="footer.description">Digital government services platform providing efficient and transparent access to various government services and certificates.</p>
+      <div class="social-icons">
+        <a href="https://www.whatsapp.com" target="_blank" aria-label="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://www.google.com" target="_blank" aria-label="Google">
+          <i class="fa-brands fa-google"></i>
+        </a>
+        <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-translate="footer.copyright">&copy; 2025 e-GramaSewa. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- JS File -->
+<script src="../js/script.js"></script>
+</body>
+</html>

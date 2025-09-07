@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help & Support - e-GramaSewa</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ================== Help Page Specific Styles ================== */
+    .help-hero {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(16, 185, 129, 0.9)), url('../images/e.jpg') center/cover no-repeat;
+      color: white;
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .help-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      animation: shimmer 4s infinite;
+    }
+
+    .help-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out;
+    }
+
+    .help-hero p {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      opacity: 0.95;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out 0.3s both;
+    }
+
+    /* ================== Help Sections ================== */
+    .help-section {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .help-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+    }
+
+    .help-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ================== Quick Help Cards ================== */
+    .quick-help {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 80px;
+    }
+
+    .help-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .help-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .help-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(37, 99, 235, 0.15);
+    }
+
+    .help-card:hover::before {
+      left: 100%;
+    }
+
+    .help-card .icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .help-card:hover .icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .help-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .help-card p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .help-card .btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .help-card .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .help-card .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .help-card .btn:hover::before {
+      left: 100%;
+    }
+
+    /* ================== Step by Step Guide ================== */
+    .steps-section {
+      background: var(--card);
+      padding: 100px 5%;
+      text-align: center;
+    }
+
+    .steps-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .step-item {
+      position: relative;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .step-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+    }
+
+    .step-number {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .step-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--text);
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .step-item p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ================== FAQ Section ================== */
+    .faq-section {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 20px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .faq-question {
+      padding: 25px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+    }
+
+    .faq-question i {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 30px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 25px 30px;
+      max-height: 300px;
+    }
+
+    .faq-answer p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ================== Contact Support ================== */
+    .support-section {
+      background: var(--card);
+      padding: 100px 5%;
+      text-align: center;
+    }
+
+    .support-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .support-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .support-option {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .support-option:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+    }
+
+    .support-option .icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: white;
+      font-size: 1.8rem;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .support-option h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .support-option p {
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    .support-option .contact-info {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* ================== Responsive Design ================== */
+    @media (max-width: 768px) {
+      .help-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .help-hero p {
+        font-size: 1.1rem;
+      }
+
+      .quick-help {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .help-card {
+        padding: 30px 25px;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .support-options {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .help-hero {
+        padding: 80px 20px 60px;
+      }
+
+      .help-hero h1 {
+        font-size: 2rem;
+      }
+
+      .help-section,
+      .steps-section,
+      .faq-section,
+      .support-section {
+        padding: 60px 5%;
+      }
+
+      .help-card,
+      .step-item,
+      .support-option {
+        padding: 25px 20px;
+      }
+    }
+
+    /* Language Toggle Button */
+    .lang-toggle-btn {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 8px 12px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lang-toggle-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .lang-toggle-btn i {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+
+<header>
+  <div class="logo">
+    <img src="../images/Logo_3.png" alt="e-GramaSewa Logo">
+  </div>
+
+  <!-- Middle Navigation Links -->
+  <nav class="middle-nav">
+    <ul>
+      <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+      <li><a href="About.html" data-translate="nav.about">About</a></li>
+      <li><a href="Service.html" data-translate="nav.services">Services</a></li>
+      <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+      <li><a href="help.html" class="active" data-translate="nav.help">Help</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Side Buttons -->
+  <div class="right-nav">
+    <a href="../php/login.php" class="login-btn" data-translate="nav.login">Login</a>
+    <a href="../php/register.php" class="register-btn" data-translate="nav.register">Register</a>
+    <select id="language-select" onchange="changeLanguage()">
+      <option value="english.html">English</option>
+      <option value="sinhala.html">සිංහල</option>
+    </select>
+    <button id="language-toggle" onclick="toggleLanguage()" class="lang-toggle-btn" title="Toggle Language">
+      <i class="fas fa-language"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Help Hero Section -->
+<section class="help-hero">
+  <div class="container">
+    <h1 data-translate="help.title">Help & Support</h1>
+    <p data-translate="help.subtitle">Find answers to your questions and get the support you need for all your government service needs.</p>
+  </div>
+</section>
+
+<!-- Quick Help Section -->
+<section class="help-section">
+  <div class="help-container">
+    <h2 class="section-title" data-translate="help.quickHelp">Quick Help</h2>
+    <p class="section-subtitle" data-translate="help.quickHelpSubtitle">Get instant help with the most common tasks and questions</p>
+    
+    <div class="quick-help">
+      <div class="help-card">
+        <div class="icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h3 data-translate="help.createAccount">Create Account</h3>
+        <p data-translate="help.createAccountDesc">Learn how to create your e-GramaSewa account and get started with our services.</p>
+        <a href="../php/register.php" class="btn" data-translate="help.getStarted">Get Started</a>
+      </div>
+
+      <div class="help-card">
+        <div class="icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h3 data-translate="help.applyServices">Apply for Services</h3>
+        <p data-translate="help.applyServicesDesc">Step-by-step guide to apply for birth certificates, ID verification, and other services.</p>
+        <a href="Service.html" class="btn" data-translate="help.viewServices">View Services</a>
+      </div>
+
+      <div class="help-card">
+        <div class="icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3 data-translate="help.trackApplication">Track Application</h3>
+        <p data-translate="help.trackApplicationDesc">Monitor your application status and get real-time updates on your requests.</p>
+        <a href="track_app.html" class="btn" data-translate="help.trackNow">Track Now</a>
+      </div>
+
+      <div class="help-card">
+        <div class="icon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <h3 data-translate="help.commonIssues">Common Issues</h3>
+        <p data-translate="help.commonIssuesDesc">Find solutions to frequently encountered problems and technical issues.</p>
+        <a href="#faq" class="btn" data-translate="help.viewFAQ">View FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Step by Step Guide -->
+<section class="steps-section">
+  <div class="steps-container">
+    <h2 class="section-title" data-translate="help.howToUse">How to Use e-GramaSewa</h2>
+    <p class="section-subtitle" data-translate="help.howToUseSubtitle">Follow these simple steps to get started with our digital services</p>
+    
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <h3 data-translate="help.step1">Create Account</h3>
+        <p data-translate="help.step1Desc">Register for a free account using your email address and personal information.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <h3 data-translate="help.step2">Verify Identity</h3>
+        <p data-translate="help.step2Desc">Complete identity verification using your National ID and other required documents.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <h3 data-translate="help.step3">Select Service</h3>
+        <p data-translate="help.step3Desc">Choose from our available government services and certificates.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">4</div>
+        <h3 data-translate="help.step4">Submit Application</h3>
+        <p data-translate="help.step4Desc">Fill out the application form and upload required documents.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">5</div>
+        <h3 data-translate="help.step5">Track Progress</h3>
+        <p data-translate="help.step5Desc">Monitor your application status and receive notifications at each stage.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">6</div>
+        <h3 data-translate="help.step6">Receive Certificate</h3>
+        <p data-translate="help.step6Desc">Download your digital certificate or collect it from the designated office.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section" id="faq">
+  <div class="faq-container">
+    <h2 class="section-title" data-translate="help.faq">Frequently Asked Questions</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq1.question">How do I create an account on e-GramaSewa?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq1.answer">To create an account, click on the "Register" button in the top navigation, fill in your personal details, verify your email address, and complete the identity verification process using your National ID.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq2.question">What documents do I need for certificate applications?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq2.answer">Required documents vary by service type. Generally, you'll need your National ID, proof of residence, and relevant supporting documents. Check the specific requirements for each service before applying.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq3.question">How long does it take to process applications?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq3.answer">Processing times vary by service type. Birth certificates typically take 3-5 business days, while other certificates may take 5-10 business days. You'll receive notifications at each stage of the process.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq4.question">Can I track my application status?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq4.answer">Yes, you can track your application status by logging into your account and visiting the "Track Application" section. You'll receive real-time updates on your application progress.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq5.question">What if I forget my password?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq5.answer">Click on "Forgot Password" on the login page, enter your email address, and follow the instructions sent to your email to reset your password securely.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq6.question">Is my personal information secure?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq6.answer">Yes, we use state-of-the-art security measures including SSL encryption, secure servers, and strict data protection protocols to ensure your personal information is safe and secure.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq7.question">Can I apply for multiple certificates at once?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq7.answer">Yes, you can apply for multiple certificates simultaneously. Each application will be processed independently, and you can track them separately in your dashboard.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-translate="help.faq8.question">What if I need help with the application process?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p data-translate="help.faq8.answer">Our support team is available 24/7 via the hotline (1919) and email. You can also visit our office during working hours for in-person assistance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Support Section -->
+<section class="support-section">
+  <div class="support-container">
+    <h2 class="section-title" data-translate="help.stillNeedHelp">Still Need Help?</h2>
+    <p class="section-subtitle" data-translate="help.stillNeedHelpSubtitle">Contact our support team for personalized assistance</p>
+    
+    <div class="support-options">
+      <div class="support-option">
+        <div class="icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <h3 data-translate="help.callUs">Call Us</h3>
+        <p data-translate="help.callUsDesc">Speak directly with our support team</p>
+        <div class="contact-info">1919</div>
+      </div>
+
+      <div class="support-option">
+        <div class="icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h3 data-translate="help.emailSupport">Email Support</h3>
+        <p data-translate="help.emailSupportDesc">Send us your questions via email</p>
+        <div class="contact-info">support@egramasewa.lk</div>
+      </div>
+
+      <div class="support-option">
+        <div class="icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h3 data-translate="help.liveChat">Live Chat</h3>
+        <p data-translate="help.liveChatDesc">Chat with our support team online</p>
+        <div class="contact-info" data-translate="help.available247">Available 24/7</div>
+      </div>
+
+      <div class="support-option">
+        <div class="icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3 data-translate="help.visitOffice">Visit Office</h3>
+        <p data-translate="help.visitOfficeDesc">Get in-person assistance</p>
+        <div class="contact-info" data-translate="help.officeAddress">Government Office, Colombo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section footer-info">
+      <h4>E-Gramasevaka</h4>
+      <p data-translate="footer.description">Digital government services platform providing efficient and transparent access to various government services and certificates.</p>
+      <div class="social-icons">
+        <a href="https://www.whatsapp.com" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+    <div class="footer-section footer-links">
+      <h4 data-translate="footer.quickLinks">Quick Links</h4>
+      <ul>
+        <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+        <li><a href="About.html" data-translate="nav.about">About</a></li>
+        <li><a href="Service.html" data-translate="nav.services">Services</a></li>
+        <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+        <li><a href="help.html" data-translate="nav.help">Help</a></li>
+      </ul>
+    </div>
+    <div class="footer-section footer-contact">
+      <h4 data-translate="footer.contactInfo">Contact Info</h4>
+      <p><strong data-translate="footer.email">Email:</strong> support@egramasewa.lk</p>
+      <p><strong data-translate="footer.hotline">Hotline:</strong> 1919</p>
+      <p><strong data-translate="footer.address">Address:</strong> Government Office, Colombo, Sri Lanka</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-translate="footer.copyright">&copy; 2025 e-GramaSewa. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- JS File -->
+<script src="../js/script.js"></script>
+<script>
+  // FAQ Toggle Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Close other FAQ items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

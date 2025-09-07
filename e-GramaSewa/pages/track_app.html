@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Application - e-GramaSewa</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ================== Track App Page Specific Styles ================== */
+    .track-hero {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(16, 185, 129, 0.9)), url('../images/f.jpg') center/cover no-repeat;
+      color: white;
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      animation: shimmer 4s infinite;
+    }
+
+    .track-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out;
+    }
+
+    .track-hero p {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      opacity: 0.95;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 1s ease-out 0.3s both;
+    }
+
+    /* ================== Guidelines Section ================== */
+    .guidelines-section {
+      padding: 100px 5%;
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .guidelines-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+    }
+
+    .guidelines-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+
+    .guideline-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .guideline-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .guideline-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+    }
+
+    .guideline-card:hover::before {
+      left: 100%;
+    }
+
+    .guideline-number {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .guideline-content h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .guideline-content p {
+      color: var(--text-light);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .guidelines-tips {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-top: 40px;
+    }
+
+    .guidelines-tips h3 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: var(--text);
+      position: relative;
+    }
+
+    .guidelines-tips h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      border-radius: 2px;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .tip-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: rgba(16, 185, 129, 0.05);
+      border-radius: 15px;
+      border-left: 4px solid var(--secondary);
+      transition: all 0.3s ease;
+    }
+
+    .tip-item:hover {
+      background: rgba(16, 185, 129, 0.1);
+      transform: translateX(5px);
+    }
+
+    .tip-item i {
+      color: var(--secondary);
+      font-size: 1.2rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .tip-item p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+
+    /* ================== Responsive Design ================== */
+    @media (max-width: 768px) {
+      .track-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .track-hero p {
+        font-size: 1.1rem;
+      }
+
+      .guidelines-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .guideline-card {
+        padding: 25px 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+
+      .guideline-number {
+        align-self: center;
+      }
+
+      .tips-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .guidelines-tips {
+        padding: 30px 25px;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+      .track-hero {
+        padding: 80px 20px 60px;
+      }
+
+      .track-hero h1 {
+        font-size: 2rem;
+      }
+
+      .guidelines-section {
+        padding: 60px 5%;
+      }
+
+      .guideline-card {
+        padding: 20px 15px;
+      }
+
+      .guidelines-tips {
+        padding: 25px 20px;
+      }
+
+      .tip-item {
+        padding: 12px;
+        gap: 12px;
+      }
+
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<header>
+  <div class="logo">
+    <img src="../images/Logo_3.png" alt="e-GramaSewa Logo">
+  </div>
+
+  <!-- Middle Navigation Links -->
+  <nav class="middle-nav">
+    <ul>
+      <li><a href="Home.html">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Service.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="help.html">Help</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Side Buttons -->
+  <div class="right-nav">
+    <a href="../php/login.php" class="login-btn">Login</a>
+    <a href="../php/register.php" class="register-btn">Register</a>
+    <select id="language-select" onchange="changeLanguage()">
+      <option value="english.html">English</option>
+      <option value="sinhala.html">සිංහල</option>
+    </select>
+  </div>
+</header>
+
+<!-- Track Hero Section -->
+<section class="track-hero">
+  <div class="container">
+    <h1>Track Your Application</h1>
+    <p>Monitor the status of your government service applications in real-time</p>
+  </div>
+</section>
+
+<!-- Guidelines Section -->
+<section class="guidelines-section">
+  <div class="guidelines-container">
+    <h2 class="section-title">How to Track Your Application</h2>
+    <p class="section-subtitle">Follow these simple steps to track your government service applications</p>
+    
+    <div class="guidelines-grid">
+      <div class="guideline-card">
+        <div class="guideline-number">1</div>
+        <div class="guideline-content">
+          <h3>Get Your Application ID</h3>
+          <p>After submitting your application, you will receive a unique Application ID via email. Keep this ID safe as you'll need it for tracking.</p>
+        </div>
+      </div>
+
+      <div class="guideline-card">
+        <div class="guideline-number">2</div>
+        <div class="guideline-content">
+          <h3>Enter Your Details</h3>
+          <p>Fill in the tracking form with your Application ID, registered email address, and select the service type you applied for.</p>
+        </div>
+      </div>
+
+      <div class="guideline-card">
+        <div class="guideline-number">3</div>
+        <div class="guideline-content">
+          <h3>Click Track Now</h3>
+          <p>Click the "Track Now" button to retrieve your application status and progress information.</p>
+        </div>
+      </div>
+
+      <div class="guideline-card">
+        <div class="guideline-number">4</div>
+        <div class="guideline-content">
+          <h3>View Your Status</h3>
+          <p>Review your application status, progress percentage, and expected completion date in the results section.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="guidelines-tips">
+      <h3>Important Tips</h3>
+      <div class="tips-grid">
+        <div class="tip-item">
+          <i class="fas fa-envelope"></i>
+          <p>Check your email regularly for status updates and notifications</p>
+        </div>
+        <div class="tip-item">
+          <i class="fas fa-clock"></i>
+          <p>Processing times vary by service type (3-10 business days)</p>
+        </div>
+        <div class="tip-item">
+          <i class="fas fa-phone"></i>
+          <p>Contact support at 1919 if you have any questions</p>
+        </div>
+        <div class="tip-item">
+          <i class="fas fa-shield-alt"></i>
+          <p>Keep your Application ID confidential for security</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section footer-info">
+      <h4>E-Gramasevaka</h4>
+      <p>Digital government services platform providing efficient and transparent access to various government services and certificates.</p>
+      <div class="social-icons">
+        <a href="https://www.whatsapp.com" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+    <div class="footer-section footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="Service.html">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="help.html">Help</a></li>
+      </ul>
+    </div>
+    <div class="footer-section footer-contact">
+      <h4>Contact Info</h4>
+      <p><strong>Email:</strong> support@egramasewa.lk</p>
+      <p><strong>Hotline:</strong> 1919</p>
+      <p><strong>Address:</strong> Government Office, Colombo, Sri Lanka</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 e-GramaSewa. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- JS File -->
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>e-GramaSewa</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/e-GramaSewa/css/style.css">
+  <style>
+    /* Advanced Chatbot Styles */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .chatbot-toggle {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      position: relative;
+      z-index: 1001;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ef4444;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .chatbot-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 380px;
+      height: 600px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+
+    .chatbot-window.active {
+      display: flex;
+      animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .chatbot-header {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bot-avatar {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .bot-details h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .status {
+      font-size: 12px;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.3; }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .header-btn, .chatbot-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-btn:hover, .chatbot-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f8fafc;
+      scroll-behavior: smooth;
+    }
+
+    .chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+
+    .message {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      animation: messageSlide 0.3s ease;
+    }
+
+    @keyframes messageSlide {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message-content {
+      max-width: 85%;
+      padding: 15px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .message.bot .message-content {
+      background: white;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      margin-right: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .message.user .message-content {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      color: white;
+      margin-left: 12px;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+    }
+
+    .message-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .message.bot .message-avatar {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+    }
+
+    .message.user .message-avatar {
+      background: #6b7280;
+    }
+
+    .chatbot-input-container {
+      background: white;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .input-actions {
+      display: flex;
+      gap: 8px;
+      padding: 10px 15px 5px;
+    }
+
+    .input-btn {
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input-btn:hover {
+      background: #f3f4f6;
+      color: #2563eb;
+      transform: scale(1.1);
+    }
+
+    .chatbot-input {
+      padding: 10px 15px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      border: 2px solid #e5e7eb;
+      border-radius: 25px;
+      padding: 12px 18px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+      background: #f8fafc;
+    }
+
+    .chatbot-input input:focus {
+      border-color: #2563eb;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .chatbot-send {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    .chatbot-send:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .chatbot-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .quick-action {
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .quick-action:hover {
+      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+      border-color: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+
+    .quick-action i {
+      color: #2563eb;
+      font-size: 14px;
+    }
+
+    .suggestions {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .suggestion-item {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 5px 0;
+      color: #475569;
+    }
+
+    .suggestion-item:hover {
+      background: #e2e8f0;
+      border-color: #cbd5e1;
+      transform: translateX(5px);
+    }
+
+    .chatbot-footer {
+      background: #f8fafc;
+      padding: 10px 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer-info {
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 15px 18px;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      margin-right: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #9ca3af;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .welcome-message .message-content {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border: 1px solid #bae6fd;
+    }
+
+    .message-time {
+      font-size: 10px;
+      opacity: 0.7;
+      margin-top: 5px;
+      text-align: right;
+    }
+
+    .message.bot .message-time {
+      text-align: left;
+    }
+
+    /* Language Toggle Button */
+    .lang-toggle-btn {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 8px 12px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lang-toggle-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .lang-toggle-btn i {
+      font-size: 16px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .chatbot-window {
+        width: 300px;
+        height: 450px;
+        right: -10px;
+      }
+      
+      .chatbot-container {
+        bottom: 15px;
+        right: 15px;
+      }
+
+      .lang-toggle-btn {
+        padding: 6px 10px;
+        margin-left: 5px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="/e-GramaSewa/images/LOGO.jpg" alt="e-GramaSewa Logo">
+  </div>
+
+  <!-- Middle Navigation Links -->
+  <nav class="middle-nav">
+    <ul>
+      <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+      <li><a href="About.html" data-translate="nav.about">About</a></li>
+      <li><a href="service.html" data-translate="nav.services">Services</a></li>
+      <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+      <li><a href="help.html" data-translate="nav.help">Help</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Side Buttons -->
+  <div class="right-nav">
+    <a href="/e-GramaSewa/php/login.php" class="login-btn" data-translate="nav.login">Login</a>
+    <a href="/e-GramaSewa/php/register.php" class="register-btn" data-translate="nav.register">Register</a>
+    <select id="language-select" onchange="changeLanguage()">
+      <option value="english.html">English</option>
+      <option value="sinhala.html">සිංහල</option>
+    </select>
+    <button id="language-toggle" onclick="toggleLanguage()" class="lang-toggle-btn" title="Toggle Language">
+      <i class="fas fa-language"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero fade-in">
+  <div class="container center">
+    <h1 data-translate="hero.title">Welcome to E-Gramasevaka</h1>
+    <p data-translate="hero.subtitle">Digital Government Services at Your Fingertips</p>
+    <div class="button-group">
+      <a href="User_Manual.html" class="btn primary" data-translate="hero.explore">User Manual</a>
+      <a href="/e-GramaSewa/php/register.php" class="btn outline" data-translate="hero.getStarted">Get Started</a>
+      <button onclick="testChatbot()" class="btn outline" style="background: #10b981; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin-left: 10px;" data-translate="hero.testChatbot">Test Chatbot</button>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features fade-in">
+  <div class="container_1">
+    <h2 class="section-title" data-translate="features.title">Why Choose E-Gramasevaka?</h2>
+    <p class="section-subtitle" data-translate="features.subtitle">Experience seamless access to government services with our digital platform</p>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3 data-translate="features.fast.title">Fast & Efficient</h3>
+        <p data-translate="features.fast.desc">Get your certificates and documents processed quickly with our streamlined digital system.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-check-circle"></i></div>
+        <h3 data-translate="features.transparent.title">Transparent Process</h3>
+        <p data-translate="features.transparent.desc">Track your application status in real-time with complete transparency.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-lock"></i></div>
+        <h3 data-translate="features.secure.title">Secure & Safe</h3>
+        <p data-translate="features.secure.desc">Your data is protected with state-of-the-art security measures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services fade-in">
+  <div class="container">
+    <h2 class="section-title" data-translate="services.title">Popular Services</h2>
+    <p class="section-subtitle" data-translate="services.subtitle">Access the most commonly requested government services</p>
+    <div class="service-cards">
+      <div class="service-card">
+        <div class="icon"><i class="fa-solid fa-file-alt"></i></div>
+        <h3 data-translate="services.birth.title">Birth Certificate</h3>
+        <p data-translate="services.birth.desc">Apply for your birth certificate online with our simplified process.</p>
+        <a href="service.html" class="learn-more" data-translate="services.learnMore">Learn More →</a>
+      </div>
+      <!-- more cards here -->
+    </div>
+    <div class="center">
+      <a href="Service.html" class="btn primary" data-translate="services.viewAll">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- Section Divider -->
+<div class="section-divider"></div>
+
+<!-- Call to Action Section -->
+<section class="cta fade-in">
+  <div class="container center">
+    <h2 data-translate="cta.title">Ready to Get Started?</h2>
+    <p data-translate="cta.subtitle">Join thousands of citizens who are already using E-Gramasevaka</p>
+    <div class="button-group">
+      <a href="/e-GramaSewa/php/register.php" class="btn primary" data-translate="cta.createAccount">Create Account</a>
+      <a href="contact.html" class="btn outline-light" data-translate="cta.contactUs">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section footer-info">
+      <h4>E-Gramasevaka</h4>
+      <p data-translate="footer.description">Digital government services platform providing efficient and transparent access to various government services and certificates.</p>
+      <div class="social-icons">
+        <a href="https://www.whatsapp.com" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+        <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+    <div class="footer-section footer-links">
+      <h4 data-translate="footer.quickLinks">Quick Links</h4>
+      <ul>
+        <li><a href="Home.html" data-translate="nav.home">Home</a></li>
+        <li><a href="About.html" data-translate="nav.services">Services</a></li>
+        <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+        <li><a href="register.html" data-translate="nav.register">Register</a></li>
+      </ul>
+    </div>
+    <div class="footer-section footer-contact">
+      <h4 data-translate="footer.contactInfo">Contact Info</h4>
+      <p><strong data-translate="footer.email">Email:</strong> support@egramasewa.lk</p>
+      <p><strong data-translate="footer.hotline">Hotline:</strong> 1919</p>
+      <p><strong data-translate="footer.address">Address:</strong> Government Office, Colombo, Sri Lanka</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-translate="footer.copyright">&copy; 2025 e-GramaSewa. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Advanced Chatbot -->
+<div class="chatbot-container">
+  <button class="chatbot-toggle" id="chatbotToggle" onclick="console.log('Chatbot button clicked!')">
+    <i class="fas fa-comments"></i>
+    <span class="notification-badge" id="notificationBadge" style="display: none;">1</span>
+  </button>
+  
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <div class="header-info">
+        <div class="bot-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="bot-details">
+          <h3 data-translate="chatbot.title">e-GramaSewa Assistant</h3>
+          <span class="status" id="botStatus" data-translate="chatbot.status">Online</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" id="clearChat" title="Clear conversation">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button class="header-btn" id="minimizeChat" title="Minimize">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button class="chatbot-close" id="chatbotClose" title="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="message bot welcome-message">
+        <div class="message-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+          <p data-translate="chatbot.welcome">👋 Welcome to e-GramaSewa! I'm your AI assistant. I can help you with:</p>
+          <div class="quick-actions">
+            <div class="quick-action" onclick="sendQuickMessage('How to register for an account?')">
+              <i class="fas fa-user-plus"></i>
+              <span data-translate="chatbot.registration">Registration</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('What services are available?')">
+              <i class="fas fa-concierge-bell"></i>
+              <span data-translate="chatbot.services">Services</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('How to track my application?')">
+              <i class="fas fa-search"></i>
+              <span data-translate="chatbot.track">Track Application</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('Contact support')">
+              <i class="fas fa-headset"></i>
+              <span data-translate="chatbot.support">Support</span>
+            </div>
+          </div>
+          <div class="suggestions">
+            <p><strong data-translate="chatbot.suggestions">💡 Try asking:</strong></p>
+            <div class="suggestion-item" onclick="sendQuickMessage('What documents do I need?')">
+              <span data-translate="chatbot.documents">"What documents do I need?"</span>
+            </div>
+            <div class="suggestion-item" onclick="sendQuickMessage('How long does it take to process an application?')">
+              <span data-translate="chatbot.processing">"How long does it take to process an application?"</span>
+            </div>
+            <div class="suggestion-item" onclick="sendQuickMessage('What are the fees?')">
+              <span data-translate="chatbot.fees">"What are the fees?"</span>
+            </div>
+            <div class="suggestion-item" onclick="sendQuickMessage('How to contact support?')">
+              <span data-translate="chatbot.contact">"How to contact support?"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chatbot-input-container">
+      <div class="input-actions">
+        <button class="input-btn" id="attachFile" title="Attach file">
+          <i class="fas fa-paperclip"></i>
+        </button>
+        <button class="input-btn" id="voiceInput" title="Voice input">
+          <i class="fas fa-microphone"></i>
+        </button>
+        <button class="input-btn" id="emojiBtn" title="Emoji">
+          <i class="fas fa-smile"></i>
+        </button>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatbotInput" placeholder="Ask me anything about e-GramaSewa..." maxlength="1000" data-translate-placeholder="chatbot.placeholder">
+        <button class="chatbot-send" id="chatbotSend">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="chatbot-footer">
+      <div class="footer-info">
+        <span><span data-translate="chatbot.powered">Powered by AI</span> • <span id="messageCount">0</span> <span data-translate="chatbot.messages">messages</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS File -->
+<script src="/e-GramaSewa/js/script.js"></script>
+
+<script>
+// Simple working chatbot
+
+// Quick message function for chatbot
+function sendQuickMessage(message) {
+  const input = document.getElementById('chatbotInput');
+  if (input) {
+    input.value = message;
+    const sendBtn = document.getElementById('chatbotSend');
+    if (sendBtn) {
+      sendBtn.click();
+    }
+  }
+}
+
+// Initialize page functionality
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Page loaded successfully');
+  
+  // Initialize basic chatbot functionality only
+  initializeBasicChatbot();
+});
+
+// Basic chatbot functionality
+function initializeBasicChatbot() {
+  console.log('Initializing basic chatbot...');
+  const toggleBtn = document.getElementById('chatbotToggle');
+  const chatWindow = document.getElementById('chatbotWindow');
+  const closeBtn = document.getElementById('chatbotClose');
+  const sendBtn = document.getElementById('chatbotSend');
+  const input = document.getElementById('chatbotInput');
+  
+  if (toggleBtn && chatWindow) {
+    toggleBtn.addEventListener('click', () => {
+      chatWindow.classList.toggle('active');
+      console.log('Chatbot toggled');
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      chatWindow.classList.remove('active');
+    });
+  }
+  
+  if (sendBtn && input) {
+    sendBtn.addEventListener('click', () => {
+      const message = input.value.trim();
+      if (message) {
+        addSimpleMessage(message, true);
+        input.value = '';
+        // Get intelligent response
+        setTimeout(() => {
+          const response = getIntelligentResponse(message);
+          addSimpleMessage(response, false);
+        }, 500);
+      }
+    });
+    
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendBtn.click();
+      }
+    });
+  }
+}
+
+function addSimpleMessage(content, isUser = false) {
+  const messagesContainer = document.getElementById('chatbotMessages');
+  if (!messagesContainer) return;
+  
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+    
+    const avatar = isUser ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+    
+    messageDiv.innerHTML = `
+      <div class="message-avatar">
+        ${avatar}
+      </div>
+      <div class="message-content">
+        <p>${content}</p>
+      </div>
+    `;
+    
+  messagesContainer.appendChild(messageDiv);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Intelligent response system
+function getIntelligentResponse(userMessage) {
+    const message = userMessage.toLowerCase();
+  
+  // Greeting responses
+  if (message.includes('hello') || message.includes('hi') || message.includes('hey') || 
+      message.includes('good morning') || message.includes('good afternoon') || 
+      message.includes('good evening') || message.includes('greetings')) {
+    return "Hello! 👋 Welcome to e-GramaSewa! I'm here to help you with government services. How can I assist you today?";
+  }
+  
+  // Registration questions
+  if (message.includes('register') || message.includes('sign up') || message.includes('create account') || 
+      message.includes('new account') || message.includes('how to register')) {
+    return `To register for e-GramaSewa:<br><br>
+    1. Click the 'Register' button in the top-right corner<br>
+    2. Fill in your personal details (name, address, NIC, etc.)<br>
+    3. Choose a unique username and password<br>
+    4. Submit the form<br><br>
+    💡 <strong>Pro tip:</strong> Keep your login credentials safe!<br><br>
+    You'll then be able to login and access all services!`;
+  }
+  
+  // Services questions
+  if (message.includes('service') || message.includes('certificate') || message.includes('available') || 
+      message.includes('what services') || message.includes('what can i get')) {
+    return `e-GramaSewa offers these services:<br><br>
+    • 🏠 Residence Certificate<br>
+    • 🆔 Character Certificate<br>
+    • 💰 Income Certificate<br>
+    • 🗺️ Land Use Certificate<br>
+    • 🌳 Tree Cutting Certificate<br>
+    • ⚰️ Death Registration<br>
+    • 🆔 NIC Verification<br><br>
+    Click 'Services' in the menu to see all available options!`;
+  }
+  
+  // Login questions
+  if (message.includes('login') || message.includes('sign in') || message.includes('password') || 
+      message.includes('how to login') || message.includes('forgot password')) {
+    return `To login:<br><br>
+    1. Click 'Login' in the top-right corner<br>
+    2. Enter your username and password<br>
+    3. Complete the reCAPTCHA verification<br>
+    4. Click 'Login'<br><br>
+    🔒 <strong>Security tip:</strong> Never share your password with anyone!<br><br>
+    If you forgot your password, contact our support team.`;
+  }
+  
+  // Tracking questions
+  if (message.includes('track') || message.includes('status') || message.includes('application') || 
+      message.includes('check status') || message.includes('where is my')) {
+    return `To track your application:<br><br>
+    1. Login to your account<br>
+    2. Go to your dashboard<br>
+    3. Click 'Track Application'<br>
+    4. View the status of all your submitted applications<br><br>
+    📊 <strong>Status meanings:</strong><br>
+    • 🟡 Pending - Under review<br>
+    • 🟢 Approved - Ready for collection<br>
+    • 🔴 Rejected - Check rejection reason`;
+  }
+  
+  // Support questions
+  if (message.includes('contact') || message.includes('support') || message.includes('help') || 
+      message.includes('phone') || message.includes('email') || message.includes('call')) {
+    return `For support, you can:<br><br>
+    • 📧 Email: support@egramasewa.lk<br>
+    • 📞 Hotline: 1919<br>
+    • 🌐 Visit our Contact page<br>
+    • 📖 Check the User Manual for detailed guides<br><br>
+    🕒 <strong>Support hours:</strong> Monday-Friday, 8:00 AM - 5:00 PM<br><br>
+    💬 I'm also here 24/7 to help with basic questions!`;
+  }
+  
+  // Document requirements
+  if (message.includes('document') || message.includes('requirement') || message.includes('need') || 
+      message.includes('what do i need') || message.includes('required documents')) {
+    return `Required documents vary by service:<br><br>
+    📋 <strong>Common documents:</strong><br>
+    • National ID (NIC)<br>
+    • Proof of address<br>
+    • Recent photographs<br>
+    • Supporting documents (varies by service)<br><br>
+    📝 <strong>Tips:</strong><br>
+    • Ensure documents are clear and readable<br>
+    • Upload in PDF, JPG, or PNG format<br>
+    • Maximum file size: 5MB per document`;
+  }
+  
+  // Processing time questions
+  if (message.includes('time') || message.includes('long') || message.includes('process') || 
+      message.includes('duration') || message.includes('how long') || message.includes('when')) {
+    return `Processing times vary by service:<br><br>
+    ⏱️ <strong>Typical timelines:</strong><br>
+    • Residence Certificate: 3-5 working days<br>
+    • Character Certificate: 5-7 working days<br>
+    • Income Certificate: 5-7 working days<br>
+    • Land Use Certificate: 7-10 working days<br>
+    • Tree Cutting Certificate: 7-10 working days<br>
+    • Death Registration: 3-5 working days<br>
+    • NIC Verification: 2-3 working days<br><br>
+    📅 Processing starts from the day your application is submitted.`;
+  }
+  
+  // About e-GramaSewa
+  if (message.includes('about') || message.includes('what is') || message.includes('e-gramasewa') || 
+      message.includes('what is this') || message.includes('explain')) {
+    return `e-GramaSewa is a digital platform that provides easy access to government services. It allows citizens to apply for various certificates and documents online, track their applications, and receive digital certificates without visiting government offices.<br><br>
+    🎯 <strong>Our mission:</strong> Making government services accessible, efficient, and transparent for all citizens.<br><br>
+    ✨ <strong>Benefits:</strong><br>
+    • Save time and effort<br>
+    • 24/7 accessibility<br>
+    • Real-time tracking<br>
+    • Secure and reliable`;
+  }
+  
+  // Cost/Fee questions
+  if (message.includes('cost') || message.includes('fee') || message.includes('price') || 
+      message.includes('charge') || message.includes('money') || message.includes('payment')) {
+    return `Most e-GramaSewa services are free of charge! 🎉<br><br>
+    💰 <strong>Free services:</strong><br>
+    • Residence Certificate<br>
+    • Character Certificate<br>
+    • Income Certificate<br>
+    • Land Use Certificate<br>
+    • Death Registration<br>
+    • NIC Verification<br><br>
+    🌳 <strong>Paid services:</strong><br>
+    • Tree Cutting Certificate (varies by location)<br><br>
+    Check with your local office for specific fees.`;
+  }
+  
+  // Default response with suggestions
+  return `I understand you're asking about "${userMessage}". While I don't have a specific answer for that, I can help you with:<br><br>
+  💡 <strong>Try asking:</strong><br>
+  • "How to register for an account?"<br>
+  • "What services are available?"<br>
+  • "How to track my application?"<br>
+  • "What documents do I need?"<br>
+  • "How long does processing take?"<br>
+  • "What are the fees?"<br>
+  • "How to contact support?"<br><br>
+  Or contact our support team for more specific assistance!`;
+}
+
+// Test function to manually open chatbot
+function testChatbot() {
+  const chatWindow = document.getElementById('chatbotWindow');
+  if (chatWindow) {
+    chatWindow.classList.add('active');
+    console.log('Chatbot opened manually');
+  } else {
+    console.error('Chatbot window not found');
+  }
+}
+
+// Make test function globally available
+window.testChatbot = testChatbot;
+</script>
+</body>
+</html>
